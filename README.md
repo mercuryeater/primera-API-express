@@ -6,16 +6,20 @@ Solution to "Mi primera API con express" project of Make It Real.
 ### Starting with Express
 
 - Initialization of express with `npm init -y` on the console, then installing express with `npm install express`.
+
 - In the *package.json* that was created you can see as the value of *"main"* *"index.js"* set by default, it's in that repository that I created the whole exercise.
+
 - Under/inside *scripts* in the *package.json* I create a new script that is going to allow me to start the server and when there's any change is going to recharge the server:
 ```
 "dev": "node --watch index.js"
 ```
+
 The script is named *dev* and executes *index.js* but it's flagged with *--watch* an experimental option that allow us to retart a server of Node.js when changes are detected in the specific file. This was made before recent updates with other libraries (e.g. *nodemon*).
 
 ### Using express
 
 - In the js file we call/require express with `const express = require('express')` and then we assigned it by convention to the variable `app` as `const app = express();`.
+
 - Then I set the port that we are going to be using: `const port = 3001;` and set express to listen to that port: 
 ```
 app.listen(port, () => console.log(`Example app listening on port ${port}`));
