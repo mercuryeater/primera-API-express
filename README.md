@@ -31,7 +31,7 @@ app.listen(port, () => console.log(`Example app listening on port ${port}`));
 
 - I used a image reference:
 
-[embed]public\http-status-code-poster.pdf[/embed]
+![Status-codes](https://raw.githubusercontent.com/mercuryeater/primera-API-express/main/public/http-status-code-poster.png)
 
 ### morgan middleware
 
