@@ -26,12 +26,12 @@ let persons = [
   },
 ];
 
-morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
+morgan.token('body', function (req) { return JSON.stringify(req.body) })
 
-// app.use(morgan(':method :url :status :res[content-length] - :response-time ms')); 
+app.use(express.json());
+
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body ')); 
-//:method :url :status :res[content-length] - :response-time ms
-//POST /api/persons 201 54 - 0.689 ms
+
 
 app.get("/api/persons", (req, res) => {
   res.json(persons);
@@ -47,7 +47,7 @@ app.get("/info", (req, res) => {
 app.get("/api/persons/:id", (req, res) => {
   const id = req.params.id;
   const person = persons.find((person) => person.id === id);
-  if (!person) return res.status(404).send('404 Person not found')
+  if (!person) return res.status(404).json({message: 'Person not found'})
   return res.json(person)
 });
 
@@ -60,18 +60,14 @@ app.delete("/api/persons/:id", (req,res) => {
 app.post("/api/persons", (req, res) => {
   const newContact = {
     id: Math.floor(Math.random() * 1000000).toString(),
-    name: 'Pepito',
-    number: '01-23-4567-89',
-  }
-   
+    name: req.body.name,
+    number: req.body.number,
+  }   
   const {name, number} = newContact;
-  if (name === '' || number === '') return res.status(406).send('error: number and name required')
-  if (persons.find((person) => person.name === name)) return res.status(409).send('error: name already registered')  
+  if (name === '' || number === '') return res.status(406).json({message: 'error: number and name required'})
+  if (persons.find((person) => person.name === name)) return res.status(409).json({message: 'error: name already registered'})  
   persons = [...persons, newContact];
-  console.log(res.body);
   res.status(201).json(newContact);
 });
-
-
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`));
